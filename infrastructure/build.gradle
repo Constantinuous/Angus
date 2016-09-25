@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":shared")
+    compile project(":domain")
+	compile project(":presentation")
+    compile group: 'com.github.javaparser', name:'javaparser-core', version: '2.3.0'
+}
