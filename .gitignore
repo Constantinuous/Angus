@@ -12,3 +12,8 @@ hs_err_pid*
 
 .gradle/
 .idea/
+bootstrap/build/
+domain/build/
+infrastructure/build/
+presentation/build/
+shared/build/

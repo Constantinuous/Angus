@@ -1,4 +1,4 @@
-package de.constaninuous.angus.di
+package de.constantinuous.angus.di
 
 /**
  * Created by RichardG on 25.09.2016.
@@ -9,7 +9,7 @@ class NullBinder : Binder {
         throw UnsupportedOperationException()
     }
 
-    override fun <T> bindInterface(port: Class<T>, adapter: ClassMatcher<T>) {
+    override fun <T> bindInterface(port: Class<T>, adapter: ClassMatcher<*>) {
 
     }
 }

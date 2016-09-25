@@ -1,5 +1,7 @@
-package de.constaninuous.angus.di
+package de.constaninuous.angus.di.impl
 
+import de.constantinuous.angus.di.Binder
+import de.constantinuous.angus.di.ClassMatcher
 import org.picocontainer.DefaultPicoContainer
 import org.picocontainer.MutablePicoContainer
 
@@ -10,7 +12,7 @@ class PicoBinder : Binder {
 
     private val picoContainer: MutablePicoContainer = DefaultPicoContainer()
 
-    override fun <T> bindInterface(port: Class<T>, adapter: ClassMatcher<T>) {
+    override fun <T> bindInterface(port: Class<T>, adapter: ClassMatcher<*>) {
         picoContainer.addComponent(port, adapter.aClass);
     }
 
