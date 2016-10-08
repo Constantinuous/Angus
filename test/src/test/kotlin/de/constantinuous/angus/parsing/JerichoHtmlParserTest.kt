@@ -24,7 +24,13 @@ class JerichoHtmlParserTest : FeatureSpec(){
     init {
         feature("JerichoHtmlParserTest") {
             scenario("should allow a subclass to be bound to the parent interface") {
+                di.resolveImplementation(HtmlParser::class.java)
+            }
+
+            scenario("Should find all text") {
                 val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val vbScript = htmlParser.getVbScript()
             }
         }
     }
