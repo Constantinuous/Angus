@@ -1,1 +1,13 @@
-language: kotlin
+{
+  "language": "kotlin",
+  "jdk": "oraclejdk8",
+  "ache": {
+    "directories": [
+      "$HOME/.m2",
+      "$HOME/.gradle"
+    ]
+  },
+  "group": "stable",
+  "dist": "precise",
+  "os": "linux"
+}
