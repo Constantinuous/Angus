@@ -50,11 +50,7 @@ class LoginScreen : View() {
                     isDefaultButton = true
 
                     setOnAction {
-                        loginController.tryLogin(
-                                username.text,
-                                password.text,
-                                remember.isSelected
-                        )
+
                     }
                 }
             }

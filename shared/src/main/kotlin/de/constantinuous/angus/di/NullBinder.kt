@@ -10,6 +10,6 @@ class NullBinder : Binder {
     }
 
     override fun <T> bindInterface(port: Class<T>, adapter: ClassMatcher<*>) {
-
+        throw UnsupportedOperationException()
     }
 }
