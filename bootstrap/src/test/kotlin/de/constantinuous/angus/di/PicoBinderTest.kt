@@ -21,6 +21,7 @@ class PicoBinderTest : FeatureSpec(){
 
                 di.bindInterface(FileSystem::class.java, toImplementation(LocalFileSystem::class.java))
             }
+
             scenario("should not allow an unrelated class to be bound to the interface") {
                 val di = PicoBinder()
 

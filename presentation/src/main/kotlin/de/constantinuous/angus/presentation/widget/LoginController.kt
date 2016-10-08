@@ -19,12 +19,6 @@ class LoginController : Controller() {
     val loginName = SimpleStringProperty()
 
     fun init() {
-        with (config) {
-            if (containsKey(USERNAME) && containsKey(PASSWORD))
-                tryLogin(string(USERNAME), string(PASSWORD), true)
-            else
-                showLoginScreen("Please log in")
-        }
         val hbox = HBox()
         hbox.border = Border.EMPTY
 
