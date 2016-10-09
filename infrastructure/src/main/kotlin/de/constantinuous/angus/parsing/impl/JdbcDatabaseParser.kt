@@ -13,12 +13,22 @@ class JdbcDatabaseParser : DatabaseParser {
     override fun extractFoo(connectionString: String, user: String, password: String){
 
         val conn = DriverManager.getConnection(connectionString, user, password)
-        val md = conn.getMetaData()
-        val functions = md.getNumericFunctions()
+        conn.catalog = "IOL_Dubai_P"
+        val md = conn.metaData
+        val numericFunctions = md.numericFunctions.split(",")
         val procedures = md.getProcedures(null, null, "%")
         val tables = md.getTables(null, null, "%", null)
+        println("---- Procedures ----")
+        while (procedures.next()) {
+            println("Procedure: "+procedures.getString(3))
+        }
+        println("---- Functions ----")
+        for (function in numericFunctions) {
+            println("Numeric Function: "+function)
+        }
+        println("---- Tables ----")
         while (tables.next()) {
-            System.out.println("Table: "+tables.getString(3))
+            println("Table: "+tables.getString(3))
         }
     }
 

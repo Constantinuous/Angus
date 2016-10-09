@@ -1,5 +1,3 @@
 dependencies {
 	compile project(":bootstrap")
-
-	testCompile group: 'net.sourceforge.jtds', name: 'jtds', version: '1.3.0'
 }
