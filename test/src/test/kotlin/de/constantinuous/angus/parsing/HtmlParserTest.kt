@@ -16,13 +16,17 @@ class HtmlParserTest : FeatureSpec(){
 
     lateinit var di : Binder
 
-    val threeBlockHtml = """<html>
-                    <% vbCode here %>
-                    <!-- <% Commented vbCode here %>-->
-                    <body>
-                    <% more vbCode %>
-                    </body>
-                    </html>"""
+    val threeBlockHtml = """
+    <html>
+    <% vbCode here %>
+    <!-- <% Commented vbCode here %>-->
+    <body>
+    <% more vbCode
+    with second line
+    %>
+    </body>
+    </html>
+    """
 
     override fun beforeEach() {
         createAllBindings()
@@ -41,6 +45,40 @@ class HtmlParserTest : FeatureSpec(){
                 val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
 
                 serverCode.size shouldEqual 3
+            }
+
+            scenario("Should find commented code block") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[0].isCommented shouldEqual false
+                serverCode[1].isCommented shouldEqual true
+                serverCode[2].isCommented shouldEqual false
+            }
+
+            scenario("Code Blocks Should have correct single line content") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[0].content shouldEqual " vbCode here "
+            }
+
+            scenario("Code Blocks Should have correct commented content") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[1].content shouldEqual " Commented vbCode here "
+            }
+
+            scenario("Code Blocks Should have correct multi line content") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[2].content shouldEqual " more vbCode\nwith second line\n"
             }
         }
     }

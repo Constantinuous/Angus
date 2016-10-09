@@ -27,7 +27,7 @@ class JerichoHtmlParser : HtmlParser {
         val comments = source.getAllElements(StartTagType.COMMENT)
 
         for(text in serverText){
-            val content = serverText[1].toString().replace("<%", "").replace("%>", "")
+            val content = text.toString().replace("<%", "").replace("%>", "")
             val isCommented = isCommented(text, comments)
             val row = text.rowColumnVector.row
             val column = text.rowColumnVector.column
