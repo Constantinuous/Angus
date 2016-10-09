@@ -1,12 +1,8 @@
 package de.constantinuous.angus.parsing
 
-import de.constaninuous.angus.di.impl.PicoBinder
 import de.constaninuous.angus.di.impl.createAllBindings
 import de.constantinuous.angus.di.Binder
 import de.constantinuous.angus.di.DiContainer
-import de.constantinuous.angus.di.toImplementation
-import de.constantinuous.angus.fs.FileSystem
-import de.constantinuous.angus.fs.LocalFileSystem
 import io.kotlintest.specs.FeatureSpec
 
 /**
@@ -21,12 +17,12 @@ class HtmlParserTest : FeatureSpec(){
     <% vbCode here %>
     <!-- <% Commented vbCode here %>-->
     <body>
-    <% more vbCode
+     <% more vbCode
     with second line
     %>
     </body>
     </html>
-    """
+    """.trimIndent()
 
     override fun beforeEach() {
         createAllBindings()
@@ -34,10 +30,13 @@ class HtmlParserTest : FeatureSpec(){
     }
 
     init {
-        feature("HtmlParserTest") {
+        feature("Working Dependency Injection") {
             scenario("should allow a subclass to be bound to the parent interface") {
                 di.resolveImplementation(HtmlParser::class.java)
             }
+        }
+
+        feature("Finding Code Block Content, even in comments") {
 
             scenario("Should find all three code blocks") {
                 val htmlParser = di.resolveImplementation(HtmlParser::class.java)
@@ -57,7 +56,7 @@ class HtmlParserTest : FeatureSpec(){
                 serverCode[2].isCommented shouldEqual false
             }
 
-            scenario("Code Blocks Should have correct single line content") {
+            scenario("Single Line Code Block Should have correct content") {
                 val htmlParser = di.resolveImplementation(HtmlParser::class.java)
 
                 val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
@@ -65,7 +64,7 @@ class HtmlParserTest : FeatureSpec(){
                 serverCode[0].content shouldEqual " vbCode here "
             }
 
-            scenario("Code Blocks Should have correct commented content") {
+            scenario("Commented Code Block Should have correct content") {
                 val htmlParser = di.resolveImplementation(HtmlParser::class.java)
 
                 val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
@@ -73,12 +72,42 @@ class HtmlParserTest : FeatureSpec(){
                 serverCode[1].content shouldEqual " Commented vbCode here "
             }
 
-            scenario("Code Blocks Should have correct multi line content") {
+            scenario("Multi Line Code Block Should have correct content") {
                 val htmlParser = di.resolveImplementation(HtmlParser::class.java)
 
                 val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
 
                 serverCode[2].content shouldEqual " more vbCode\nwith second line\n"
+            }
+        }
+
+        feature("Finding Code Block Rows and Columns") {
+
+            scenario("Single Line Code Block Should have correct row and column") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[0].row shouldEqual 2
+                serverCode[0].column shouldEqual 1
+            }
+
+            scenario("Commented Code Block Should have correct row and column") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[1].row shouldEqual 3
+                serverCode[1].column shouldEqual 6
+            }
+
+            scenario("Multi Line Code Block Should have correct row and column") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode[2].row shouldEqual 5
+                serverCode[2].column shouldEqual 2
             }
         }
     }
