@@ -5,6 +5,6 @@ package de.constantinuous.angus.parsing
  */
 interface HtmlParser {
 
-    fun getVbScript(): List<VbBlock>
+    fun extractServerBlocks(htmlText: String): List<ServerBlock>
 
 }

@@ -12,9 +12,17 @@ import io.kotlintest.specs.FeatureSpec
 /**
  * Created by RichardG on 25.09.2016.
  */
-class JerichoHtmlParserTest : FeatureSpec(){
+class HtmlParserTest : FeatureSpec(){
 
     lateinit var di : Binder
+
+    val threeBlockHtml = """<html>
+                    <% vbCode here %>
+                    <!-- <% Commented vbCode here %>-->
+                    <body>
+                    <% more vbCode %>
+                    </body>
+                    </html>"""
 
     override fun beforeEach() {
         createAllBindings()
@@ -22,15 +30,17 @@ class JerichoHtmlParserTest : FeatureSpec(){
     }
 
     init {
-        feature("JerichoHtmlParserTest") {
+        feature("HtmlParserTest") {
             scenario("should allow a subclass to be bound to the parent interface") {
                 di.resolveImplementation(HtmlParser::class.java)
             }
 
-            scenario("Should find all text") {
+            scenario("Should find all three code blocks") {
                 val htmlParser = di.resolveImplementation(HtmlParser::class.java)
 
-                val vbScript = htmlParser.getVbScript()
+                val serverCode = htmlParser.extractServerBlocks(threeBlockHtml)
+
+                serverCode.size shouldEqual 3
             }
         }
     }

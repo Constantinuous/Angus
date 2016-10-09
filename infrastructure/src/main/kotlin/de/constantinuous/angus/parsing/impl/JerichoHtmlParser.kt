@@ -1,7 +1,7 @@
 package de.constantinuous.angus.parsing.impl
 
 import de.constantinuous.angus.parsing.HtmlParser
-import de.constantinuous.angus.parsing.VbBlock
+import de.constantinuous.angus.parsing.ServerBlock
 import net.htmlparser.jericho.*
 import java.util.*
 
@@ -10,37 +10,32 @@ import java.util.*
  */
 class JerichoHtmlParser : HtmlParser {
 
-    private fun test(){
-        val htmlText = "<html></html>"
-        val source = Source(htmlText)
-
+    private fun isCommented(serverText: Element, comments: List<Element>): Boolean{
+        var isCommented = false
+        for(comment in comments){
+            isCommented = comment.encloses(serverText)
+            if(isCommented){ break }
+        }
+        return isCommented
     }
 
-    override fun getVbScript(): List<VbBlock> {
-        val htmlText = """<html>
-            <% vbCode here %>
-            <!-- <% Commented vbCode here %>-->
-            <body>
-            <% more vbCode %>
-            </body>
-            </html>"""
-        val source = Source(htmlText)
-        source.fullSequentialParse()
-        val text = source.getTextExtractor().toString()
-        val lala = source.getAllElements(StartTagType.SERVER_COMMON)
-        val column0 = lala[0].rowColumnVector.column
-        val row = lala[1].rowColumnVector.row
-        val column1 = lala[1].rowColumnVector.column
-        val pos = lala[1].rowColumnVector.pos
-        val column2 = lala[2].rowColumnVector.column
+    override fun extractServerBlocks(htmlText: String): List<ServerBlock> {
+        val serverBlocks = LinkedList<ServerBlock>()
 
-        val it = source.getNodeIterator()
-        val results = LinkedList<Segment>()
-        while (it.hasNext()) {
-            val cur = it.next()
-            println(cur)
+        val source = Source(htmlText)
+        val serverText = source.getAllElements(StartTagType.SERVER_COMMON)
+        val comments = source.getAllElements(StartTagType.COMMENT)
+
+        for(text in serverText){
+            val content = serverText[1].toString().replace("<%", "").replace("%>", "")
+            val isCommented = isCommented(text, comments)
+            val row = text.rowColumnVector.row
+            val column = text.rowColumnVector.column
+
+            val serverBlock = ServerBlock(content, isCommented, row, column)
+            serverBlocks.add(serverBlock)
         }
 
-        return LinkedList<VbBlock>()
+        return serverBlocks
     }
 }
