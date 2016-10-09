@@ -7,4 +7,6 @@ interface HtmlParser {
 
     fun extractServerBlocks(htmlText: String): List<ServerBlock>
 
+    fun findAttributes(htmlText: String)
+
 }

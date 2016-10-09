@@ -38,4 +38,25 @@ class JerichoHtmlParser : HtmlParser {
 
         return serverBlocks
     }
+
+    override fun findAttributes(htmlText: String){
+        val source = Source(htmlText)
+        val attributes = source.parseAttributes()
+        val uriAttributes = source.uriAttributes
+        val allTags = source.allStartTags
+        val depth2 = allTags[2].element.depth
+        val depth3 = allTags[3].element.depth
+        val foo = ""
+    }
+
+    private fun extractLinks(htmlText: String){
+        val source = Source(htmlText)
+        val allTags = source.allStartTags
+
+        for(tag in allTags){
+            if(tag.startTagType == StartTagType.COMMENT){
+                continue
+            }
+        }
+    }
 }

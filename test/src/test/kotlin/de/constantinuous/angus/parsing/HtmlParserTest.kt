@@ -24,6 +24,27 @@ class HtmlParserTest : FeatureSpec(){
     </html>
     """.trimIndent()
 
+    val linkingAttributesHtml = """
+    <html>
+    <body>
+    <form action="http://form.submit.google.com">
+        <input type="submit" value="Go to Google" />
+    </form>
+    <a href="http://a.href.google.com" class="btn btn-default">Go to Google</a>
+    <!--
+        <a href="http://comment.a.href.google.com" class="btn btn-default">Go to Google</a>
+        <input type="button" onclick="location.href='http://comment.input.onclick.google.com';" value="Go to Google" />
+    -->
+    <input type="button" onclick="location.href='http://input.onclick.google.com';" value="Go to Google" />
+    <button onclick="location.href='http://www.button.onclick.goggle.com'">Go to Google</button>
+    <form>
+        <button formaction="http://button.formaction.google.com">Go to Google!</button>
+    </form>
+    <% Response.Redirect("http://redirect.google.com") %>
+    </body>
+    </html>
+    """.trimIndent()
+
     override fun beforeEach() {
         createAllBindings()
         di = DiContainer.instance
@@ -108,6 +129,18 @@ class HtmlParserTest : FeatureSpec(){
 
                 serverCode[2].row shouldEqual 5
                 serverCode[2].column shouldEqual 2
+            }
+        }
+
+
+
+        feature("Finding Attributes") {
+
+            scenario("Single Line Code Block Should have correct row and column") {
+                val htmlParser = di.resolveImplementation(HtmlParser::class.java)
+
+                htmlParser.findAttributes(linkingAttributesHtml)
+
             }
         }
     }
