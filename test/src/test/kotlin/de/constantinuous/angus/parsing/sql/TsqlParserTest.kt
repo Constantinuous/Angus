@@ -19,11 +19,25 @@ class TsqlParserTest : FeatureSpec(){
     }
 
     init {
-        feature("Working Dependency Injection") {
-            scenario("should allow a subclass to be bound to the parent interface") {
+        feature("Parse T-SQL Code") {
+            scenario("should find stuff in select") {
                 val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
 
-                tsqlParser.printDrink("bla")
+                tsqlParser.printDrink("SELECT Field1, Field2 FROM M_Data WHERE Field3 = Value")
+            }
+
+            scenario("should find stuff in delete") {
+                val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
+
+                tsqlParser.printDrink("DELETE FROM M_Data WHERE Field1 = Value")
+            }
+
+            scenario("should find stuff in insert with values") {
+                val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
+
+                tsqlParser.printTree("INSERT INTO M_Data VALUES (value1, value2)")
+
+                tsqlParser.printDrink("INSERT INTO M_Data VALUES (value1, value2)")
             }
         }
     }

@@ -5,4 +5,6 @@ package de.constantinuous.angus.parsing.sql
  */
 interface TSqlParser {
     fun printDrink(drinkSentence: String)
+
+    fun printTree(drinkSentence: String)
 }
