@@ -8,6 +8,8 @@ import de.constantinuous.angus.parsing.DatabaseParser
 import de.constantinuous.angus.parsing.HtmlParser
 import de.constantinuous.angus.parsing.impl.JdbcDatabaseParser
 import de.constantinuous.angus.parsing.impl.JerichoHtmlParser
+import de.constantinuous.angus.parsing.sql.TSqlParser
+import de.constantinuous.angus.sql.impl.AntlrTSqlParser
 import org.picocontainer.DefaultPicoContainer
 
 /**
@@ -22,4 +24,5 @@ fun createAllBindings(){
     di.bindInterface(FileSystem::class.java, toImplementation(LocalFileSystem::class.java))
     di.bindInterface(HtmlParser::class.java, toImplementation(JerichoHtmlParser::class.java))
     di.bindInterface(DatabaseParser::class.java, toImplementation(JdbcDatabaseParser::class.java))
+    di.bindInterface(TSqlParser::class.java, toImplementation(AntlrTSqlParser::class.java))
 }
