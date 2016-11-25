@@ -51,7 +51,7 @@ subprojects {
 		testCompile "junit:junit:$junit_version"
 		testCompile "io.kotlintest:kotlintest:$kotlintest_version"
 		testCompile 'com.natpryce:hamkrest:1.2.0.0'
-		testCompile "com.nhaarman:mockito-kotlin:0.6.2"
+        testCompile "org.mockito:mockito-core:1.+"
     }
 }
 

@@ -1,12 +1,10 @@
 package de.constantinuous.angus.extract
 
-import com.nhaarman.mockito_kotlin.*
-import de.constaninuous.angus.di.impl.createAllBindings
-import de.constantinuous.angus.di.Binder
-import de.constantinuous.angus.di.DiContainer
 import de.constantinuous.angus.parsing.CodePiece
-import de.constantinuous.angus.parsing.DatabaseParser
+import de.constantinuous.angus.test.*
 import io.kotlintest.specs.FeatureSpec
+import org.mockito.Mock
+import org.mockito.Mockito
 
 /**
  * Created by RichardG on 24.11.2016.
@@ -28,7 +26,7 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener).onString("good result")
+                Mockito.verify(mockStringListener).onString("good result")
             }
 
             scenario("should ignore comment") {
@@ -36,7 +34,7 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, never()).onString(any())
+                Mockito.verify(mockStringListener, Mockito.never()).onString(any())
             }
 
             scenario("should extract second line string") {
@@ -46,7 +44,7 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, times(1)).onString("good result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("good result")
             }
 
             scenario("should extract both strings") {
@@ -57,8 +55,8 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, times(1)).onString("good result")
-                verify(mockStringListener, times(1)).onString("better result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("good result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("better result")
             }
 
             scenario("should extract both strings even with data in between") {
@@ -70,8 +68,8 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, times(1)).onString("good result")
-                verify(mockStringListener, times(1)).onString("better result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("good result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("better result")
             }
 
             scenario("should extract three-line string as one") {
@@ -83,7 +81,7 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, times(1)).onString("good, better, best result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("good, better, best result")
             }
 
             scenario("should extract three-line string with comment in between as one") {
@@ -95,7 +93,7 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, times(1)).onString("good, best result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("good, best result")
             }
 
             scenario("should extract three-line string as one, even with comment at the end") {
@@ -107,7 +105,7 @@ class VbLexerTest : FeatureSpec(){
 
                 vbLexer.parsePiece(codePiece)
 
-                verify(mockStringListener, times(1)).onString("good, better, best result")
+                Mockito.verify(mockStringListener, Mockito.times(1)).onString("good, better, best result")
             }
         }
     }
