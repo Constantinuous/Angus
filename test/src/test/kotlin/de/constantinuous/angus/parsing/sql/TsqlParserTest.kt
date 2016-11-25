@@ -32,13 +32,33 @@ class TsqlParserTest : FeatureSpec(){
                 tsqlParser.printDrink("DELETE FROM M_Data WHERE Field1 = Value")
             }
 
-            scenario("should find stuff in insert with values") {
+            scenario("should find stuff in insert") {
                 val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
-
-                tsqlParser.printTree("INSERT INTO M_Data VALUES (value1, value2)")
 
                 tsqlParser.printDrink("INSERT INTO M_Data VALUES (value1, value2)")
             }
+
+            scenario("should find stuff in insert with column names") {
+                val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
+
+                tsqlParser.printDrink("INSERT INTO M_Data (Field1, Field2) VALUES (value1, value2)")
+            }
+
+            scenario("should find stuff in exec") {
+                val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
+
+                tsqlParser.printTree("EXEC sp_addlinkedserver 'SeattleSales', 'SQL Server'")
+
+                tsqlParser.printDrink("EXEC sp_addlinkedserver 'SeattleSales', 'SQL Server'")
+            }
+
+            scenario("should find stuff in function") {
+                val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
+
+                tsqlParser.printDrink("select dbo.ScalarFunctionName(@param1)")
+            }
+
+
         }
     }
 }

@@ -22,22 +22,19 @@ class AntlrTsqlListener : tsqlBaseListener() {
     }
 
     override fun exitInsert_statement(ctx: tsqlParser.Insert_statementContext) {
+        val columnNames = ctx.getColumnNames()
         val tableName = ctx.getTableName()
-    }
-
-    override fun exitInsert_statement_value(ctx: tsqlParser.Insert_statement_valueContext) {
     }
 
     override fun exitUpdate_statement(ctx: tsqlParser.Update_statementContext) {
     }
 
     override fun exitExecute_statement(ctx: tsqlParser.Execute_statementContext) {
-    }
-
-    override fun exitFunction_call_expression(ctx: tsqlParser.Function_call_expressionContext) {
+        val procedureNames = ctx.getProcedureNames()
     }
 
     override fun exitFunction_call(ctx: tsqlParser.Function_callContext) {
+        println("Function call context")
     }
 
 }
