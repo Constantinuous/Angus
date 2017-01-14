@@ -2,6 +2,7 @@ package de.constantinuous.dietrich.data
 
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import de.constantinuous.angus.common.use
+import org.h2.tools.Server
 import java.io.Closeable
 import java.io.FileInputStream
 import java.sql.*
@@ -51,6 +52,13 @@ class Database (private val dataSource: DataSource) {
             }
 
         }
+    }
+
+    @Throws(SQLException::class)
+    private fun openServerModeInBrowser() {
+        val server = Server.createTcpServer().start()
+        println("Server started and connection is open.")
+        System.out.println("URL: jdbc:h2:" + server.getURL() + "/mem:test")
     }
 
     @Throws(SQLException::class)
