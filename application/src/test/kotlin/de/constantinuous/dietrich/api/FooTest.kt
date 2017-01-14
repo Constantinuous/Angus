@@ -15,7 +15,7 @@ class FooTest  : FeatureSpec(){
         feature("Empty Feature") {
             scenario("Test reactive"){
                 val foo = Foo()
-                foo.doFoo()
+                foo.loopOverFiles()
             }
         }
     }
