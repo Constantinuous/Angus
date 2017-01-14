@@ -4,3 +4,7 @@
 
 ## Validate Travis File online
 http://lint.travis-ci.org/
+
+## Run
+
+Run UI via gradile: `gradle jfxrun`

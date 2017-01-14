@@ -5,3 +5,15 @@ dependencies {
 	compile "no.tornado:tornadofx:1.5.9"
 	compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.9'
 }
+
+
+
+apply plugin: 'javafx-gradle-plugin'
+
+jfx {
+    // minimal requirement for jfxJar-task
+    mainClass = 'de.constantinuous.dietrich.presentation.TestApp'
+
+    // minimal requirement for jfxNative-task
+    vendor = 'YourName'
+}
