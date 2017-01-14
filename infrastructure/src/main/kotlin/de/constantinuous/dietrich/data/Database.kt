@@ -1,20 +1,18 @@
 package de.constantinuous.dietrich.data
 
+import com.mchange.v2.c3p0.ComboPooledDataSource
 import de.constantinuous.angus.common.use
 import java.io.Closeable
 import java.io.FileInputStream
 import java.sql.*
+import javax.naming.Context
+import javax.naming.InitialContext
+import javax.sql.DataSource
 
 /**
  * Created by RichardG on 14.01.2017.
  */
-class Database {
-
-    private val DB_DRIVER = "org.h2.Driver"
-    private val DB_CONNECTION = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
-    private val DB_USER = ""
-    private val DB_PASSWORD = ""
-
+class Database (private val dataSource: DataSource) {
 
     @Throws(SQLException::class)
     fun getStoredProcedures() {
@@ -115,15 +113,7 @@ class Database {
     }
 
     private fun getDBConnection(): Connection {
-        try {
-            Class.forName(DB_DRIVER)
-        } catch (e: ClassNotFoundException) {
-            println(e.message)
-        }
-
-        val dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD)
-
-        return dbConnection
+        return dataSource.connection
     }
 
 }

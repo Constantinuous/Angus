@@ -11,17 +11,17 @@ class DatabaseTest : FeatureSpec(){
     init {
         feature("Empty Feature") {
             scenario("Test statement insert"){
-                val foo = Database()
+                val foo = Database(DriverManagerDataSource())
                 foo.insertWithStatement()
             }
 
             scenario("Test prepared statement insert"){
-                val foo = Database()
+                val foo = Database(DriverManagerDataSource())
                 foo.insertWithPreparedStatement()
             }
 
             scenario("Test getting stored procedures"){
-                val foo = Database()
+                val foo = Database(DriverManagerDataSource())
                 foo.getStoredProcedures()
             }
         }
