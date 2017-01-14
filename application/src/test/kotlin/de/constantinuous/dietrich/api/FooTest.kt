@@ -8,7 +8,7 @@ import io.kotlintest.specs.FeatureSpec
 /**
  * Created by RichardG on 14.01.2017.
  */
-class FooTest  : FeatureSpec(){
+class FooTest : FeatureSpec(){
 
 
     init {

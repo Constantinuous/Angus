@@ -7,6 +7,7 @@ dependencies {
     compile group: 'com.github.javaparser', name:'javaparser-core', version: '2.3.0'
     compile group: 'net.htmlparser.jericho', name: 'jericho-html', version: '3.3'
     compile group: 'net.sourceforge.jtds', name: 'jtds', version: '1.3.0'
+    compile group: 'com.h2database', name: 'h2', version: '1.4.193'
 
     antlr "org.antlr:antlr4:4.5" // use ANTLR version 4
 }
