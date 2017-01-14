@@ -32,7 +32,17 @@ class JdbcDatabaseParser : DatabaseParser {
         }
     }
 
-    private fun foo(){
-
+    private fun getProcedureCode(connection: Connection, myViewName : String){
+        val query = "exec sp_helptext ?"
+        val stmt = connection.prepareStatement(query)
+        stmt.setString(1, myViewName)
+        val rs = stmt.executeQuery()
+        val b = StringBuilder()
+        while (rs.next()) {
+            b.append(rs.getString("Text"))
+        }
+        rs.close()
+        stmt.close()
+        println(b.toString())
     }
 }

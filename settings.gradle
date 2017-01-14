@@ -1,2 +1,2 @@
-include 'test', 'bootstrap', 'shared', 'domain', 'presentation', 'infrastructure'
+include 'test', 'bootstrap', 'shared', 'domain', 'presentation', 'infrastructure', 'application'
 

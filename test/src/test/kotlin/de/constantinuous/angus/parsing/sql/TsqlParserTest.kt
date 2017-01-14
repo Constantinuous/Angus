@@ -47,15 +47,13 @@ class TsqlParserTest : FeatureSpec(){
             scenario("should find stuff in exec") {
                 val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
 
-                tsqlParser.printTree("EXEC sp_addlinkedserver 'SeattleSales', 'SQL Server'")
-
                 tsqlParser.printDrink("EXEC sp_addlinkedserver 'SeattleSales', 'SQL Server'")
             }
 
             scenario("should find stuff in function") {
                 val tsqlParser = di.resolveImplementation(TSqlParser::class.java)
 
-                tsqlParser.printDrink("select dbo.ScalarFunctionName(@param1)")
+                tsqlParser.printTree("select dbo.ScalarFunctionName(@param1)")
             }
 
 

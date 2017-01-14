@@ -1,6 +1,8 @@
 dependencies {
 	compile project(":shared")
 	compile project(":domain")
-	compile "no.tornado:tornadofx:1.4.8"
+    compile project(":application")
+	compile "no.tornado:tornadofx:1.5.9"
+	compile "io.reactivex.rxjava2:rxjava:2.0.4"
 	compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.9'
 }
