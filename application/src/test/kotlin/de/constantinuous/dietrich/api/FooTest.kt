@@ -13,7 +13,10 @@ class FooTest  : FeatureSpec(){
 
     init {
         feature("Empty Feature") {
-
+            scenario("Test reactive"){
+                val foo = Foo()
+                foo.doFoo()
+            }
         }
     }
 }
