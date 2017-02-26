@@ -3,6 +3,8 @@ package de.constantinuous.dietrich.presentation
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
+import javafx.scene.paint.Color
+import javafx.scene.shape.Rectangle
 import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
 import org.fxmisc.richtext.StyleSpans
@@ -58,15 +60,28 @@ class MyView: View() {
 
     init {
         val codeArea = CodeArea()
-//        codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
-//
-//        codeArea.richChanges().filter { ch -> !ch.inserted.equals(ch.removed) } // XXX
-//                .subscribe { change -> codeArea.setStyleSpans(0, computeHighlighting(codeArea.text)) }
-//        codeArea.replaceText(0, 0, sampleCode)
+        codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
+
+        codeArea.richChanges().filter { ch -> !ch.inserted.equals(ch.removed) } // XXX
+                .subscribe { change -> codeArea.setStyleSpans(0, computeHighlighting(codeArea.text)) }
+        codeArea.replaceText(0, 0, sampleCode)
 
         root += Button("Press Me")
-        root += Label("")
+        root += Label("Foo")
         root += CodeArea()
+
+        var rectangle1 = Rectangle()
+        rectangle1.fill = Color.BLUE
+        rectangle1.width =  300.0
+        rectangle1.height = 150.0
+
+        var rectangle2 = Rectangle()
+        rectangle2.fill = Color.RED
+        rectangle2.width =  300.0
+        rectangle2.height = 150.0
+
+        root += rectangle1
+        root += rectangle2
     }
 
     private fun computeHighlighting(text: String): StyleSpans<Collection<String>> {
