@@ -10,13 +10,10 @@ import kotlin.comparisons.compareBy
  * Created by RichardG on 26.02.2017.
  */
 class TreeMap() {
-    private var cursor: Int = 0
 
     fun squarify(items: List<Node>, bounds: Rectangle) {
         squarify(sortDescending(items), 0, items.size - 1, bounds)
     }
-
-    private fun sortDescending(items: List<Node>): List<Node> = items.sortedByDescending { it.size }
 
     private fun squarify(items: List<Node>, start: Int, end: Int, bounds: Rectangle) {
         if (start > end) {
@@ -26,7 +23,7 @@ class TreeMap() {
             items[start].bounds = bounds
         }
 
-        this.cursor = start
+        var cursor = start
 
         while (cursor < end) {
             if (highestNodeAspectRatio(items, start, cursor, bounds) > highestNodeAspectRatio(items, start, cursor + 1, bounds)) {
@@ -36,17 +33,6 @@ class TreeMap() {
                 squarify(items, cursor + 1, end, newBounds)
             }
         }
-    }
-
-    private fun highestNodeAspectRatio(items: List<Node>, start: Int, end: Int, bounds: Rectangle): Double {
-        layoutRow(items, start, end, bounds)
-        var max = java.lang.Double.MIN_VALUE
-        for (i in start..end) {
-            if (items[i].bounds.aspectRatio() > max) {
-                max = items[i].bounds.aspectRatio()
-            }
-        }
-        return max
     }
 
     private fun layoutRow(items: List<Node>, start: Int, end: Int, bounds: Rectangle): Rectangle {
@@ -81,9 +67,17 @@ class TreeMap() {
         }
     }
 
+    private fun sortDescending(items: List<Node>): List<Node> = items.sortedByDescending { it.size }
 
-    fun totalSize(items: List<Node>): Double {
-        return totalSize(items, 0, items.size - 1)
+    private fun highestNodeAspectRatio(items: List<Node>, start: Int, end: Int, bounds: Rectangle): Double {
+        layoutRow(items, start, end, bounds)
+        var max = java.lang.Double.MIN_VALUE
+        for (i in start..end) {
+            if (items[i].bounds.aspectRatio() > max) {
+                max = items[i].bounds.aspectRatio()
+            }
+        }
+        return max
     }
 
     private fun totalSize(items: List<Node>, start: Int, end: Int): Double {
