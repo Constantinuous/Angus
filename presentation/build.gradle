@@ -4,6 +4,7 @@ dependencies {
     compile project(":application")
 	compile "no.tornado:tornadofx:1.5.9"
 	compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.9'
+	compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.6.10'
 }
 
 
